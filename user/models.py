@@ -24,13 +24,12 @@ class User(AbstractUser):
         error_messages={
             "unique": _("A user with that username already exists."),
         },
-    )
-    
-    
+    ) 
+    date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
+    is_employer = models.BooleanField(default=False)
     email = models.EmailField(_("email address"), unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "username", "last_name", "phone_number"]
-    date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
     
 class Meta:
     verbose_name = "User"

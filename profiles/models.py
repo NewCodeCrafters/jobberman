@@ -7,8 +7,6 @@ class PurposeChoice(models.TextChoices):
     EMPLOYER = "EMPLOYER"
     CANDIDATES = "CANDIDATES"
     FREELANCERS = "FREELANCERS"
-    
-  
 
 
 class Profiles(models.Model):
