@@ -1,23 +1,17 @@
 from django.contrib import admin
-from .models import Education, Profiles, WorkExperince
+from .models import WorkExperience, Education, Profiles
 
-
-@admin.register(Profiles)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "location", "contact_email", "contact_phone"]
-    list_display_links = list_display
-    list_filter = ["user"]
-    
-    
-@admin.register(WorkExperince)
-class WorkExperinceAdmin(admin.ModelAdmin):
-    list_display = ["user_profile", "job_title", "company", ]
-    list_display_links = list_display
-    list_filter = ["user_profile"]
-
+@admin.register(WorkExperience)
+class WorkExperienceAdmin(admin.ModelAdmin):
+    list_display = ('user', 'job_title', 'company', 'start_date', 'end_date')
+    search_fields = ('user', 'job_title', 'company', 'description')
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ["user_profile", "degree", "course", "school" ]
-    list_display_links = list_display[:2]
-    list_filter = ["user_profile"]
+    list_display = ('user', 'degree', 'course', 'school', 'graduation_date')
+    search_fields = ('user','degree', 'course', 'school')
+
+@admin.register(Profiles)
+class ProfilesAdmin(admin.ModelAdmin):
+    list_display = ('user', 'job_title', 'location', 'contact_email', 'contact_phone')
+    search_fields = ('user__first_name', 'user__last_name', 'job_title', 'location')
