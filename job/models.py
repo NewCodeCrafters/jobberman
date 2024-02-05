@@ -10,7 +10,7 @@ class JobType(models.TextChoices):
     fulltime = "Fulltime"
     contract = "Contract"
     intenship = "intenship"
-    parttime = "partime"
+    parttime = "Par time"
 
 
 

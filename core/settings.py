@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "user",
     "profiles",
+    "job",
 
      # 3rd party apps
     "djoser",
