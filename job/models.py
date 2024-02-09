@@ -32,8 +32,6 @@ class Skill(models.Model):
         return super().save(*args, **kwargs)
 
 
-# str
-
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=60, verbose_name="Job Title")
