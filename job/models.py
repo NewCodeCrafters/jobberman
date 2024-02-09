@@ -35,7 +35,7 @@ class Skill(models.Model):
 # str
 
 class Job(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=60, verbose_name="Job Title")
     company = models.CharField(max_length=60, verbose_name="Company Name")
     work_type = models.CharField(max_length=20, choices=WorkType.choices)

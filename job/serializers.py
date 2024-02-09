@@ -9,8 +9,8 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class JobSerializer(serializers.ModelSerializer):
-    skills = serializers.PrimaryKeyRelatedField(queryset=Skill.objects.all(), many=True)
+    skills = serializers.SlugRelatedField(slug_field='slug', queryset=Skill.objects.all(), many=True)
     class Meta:
         model = Job
-        fields = ("title", "company", "work_type", "job_type", "description", "skills")
+        fields = ("title", "company", "work_type", "job_type", "description", "skills", 'is_available')
         
