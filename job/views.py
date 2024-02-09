@@ -51,8 +51,8 @@ class GetUpdateJobView(views.APIView):
         return response.Response(serializer.data)
 
     @swagger_auto_schema(request_body=JobSerializer)
-    def put(self, request, id):
-        jobs = Job.objects.get(id=id, user = request.user)
+    def put(self, request, slug):
+        jobs = Job.objects.get(slug=slug, user = request.user)
         serializer = JobSerializer(jobs, data=request.data)
         if serializer.is_valid():
             serializer.save()

@@ -37,6 +37,7 @@ class Skill(models.Model):
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=60, verbose_name="Job Title")
+    slug = models.SlugField(max_length=100, blank=True)
     company = models.CharField(max_length=60, verbose_name="Company Name")
     work_type = models.CharField(max_length=20, choices=WorkType.choices)
     job_type = models.CharField(max_length=20, choices=JobType.choices)
@@ -48,4 +49,7 @@ class Job(models.Model):
 
     def __str__(self) -> str:
         return self.title 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
