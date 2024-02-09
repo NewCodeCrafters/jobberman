@@ -5,7 +5,17 @@ from rest_framework import response, status, permissions, views
 from .models import Job
 
 
-
+class AddSkillView(views.APIView):
+    serializer_class = SkillSerializer
+    @swagger_auto_schema(request_body=serializer_class)
+    def post(self, request):
+        serializer = SkillSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response({"success": "Skill Successfully saved"}, status=status.HTTP_201_CREATED)
+        return response.Response({"error": "Skill not saved"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 class PostJobView(views.APIView):
     serializer_class = JobSerializer
 
@@ -20,16 +30,7 @@ class PostJobView(views.APIView):
 
 
 
-class AddSkillView(views.APIView):
-    serializer_class = SkillSerializer
-    @swagger_auto_schema(request_body=serializer_class)
-    def post(self, request):
-        serializer = SkillSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return response.Response({"success": "Skill Successfully saved"}, status=status.HTTP_201_CREATED)
-        return response.Response({"error": "Skill not saved"}, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class GetUpdateJobView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
