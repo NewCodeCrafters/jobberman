@@ -17,6 +17,8 @@ class AvailableJobs(views.APIView):
 
 class AddSkillView(views.APIView):
     serializer_class = SkillSerializer
+    permission_classes = [permissions.IsAdminUser]
+
     @swagger_auto_schema(request_body=serializer_class)
     def post(self, request):
         serializer = SkillSerializer(data=request.data)
@@ -35,7 +37,7 @@ class PostJobView(views.APIView):
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user = request.user)
-            return response.Response({"success": "Job Successfully saved"}, status=status.HTTP_201_CREATED)
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
         return response.Response({"error": "Job not saved"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -44,16 +46,16 @@ class GetUpdateJobView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = JobSerializer
 
-    def get(self, request):
+    def get(self, request, slug):
         user = request.user
-        jobs = Job.objects.filter(user=user)
+        jobs = Job.objects.filter(user=user, slug=slug).first()
         serializer = JobSerializer(jobs)
         return response.Response(serializer.data)
 
     @swagger_auto_schema(request_body=JobSerializer)
     def put(self, request, slug):
-        jobs = Job.objects.get(slug=slug, user = request.user)
-        serializer = JobSerializer(jobs, data=request.data)
+        job = Job.objects.filter(slug=slug, user = request.user).first()
+        serializer = JobSerializer(job, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return response.Response(serializer.data, status.HTTP_200_OK)
